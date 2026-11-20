@@ -1,4 +1,4 @@
-Jobbklar – Hva jeg har lært om AD DS og LDAP
+## Ukeplan-AD DS og LDAP
 
 Denne uken har jeg jobbet praktisk med Active Directory Domain Services (AD DS), LDAP, DNS og Group Policy i Windows Server.
 
