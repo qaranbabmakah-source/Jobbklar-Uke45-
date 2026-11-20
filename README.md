@@ -7,13 +7,21 @@ Jeg har lært hvordan jeg kan administrere brukere, grupper og OU-er i et Window
 Dette har jeg gjort i laben
 
 Jeg har jobbet med domenet firma.local og domenekontrolleren DC01.
+
 Jeg har testet domenepålogging på CLIENT01 med brukeren sara.ahmed.
+
 Jeg har kontrollert gruppemedlemskap med kommandoen whoami /groups.
+
 Jeg har testet tilgang til den delte Support-mappen gjennom sikkerhetsgrupper.
+
 Jeg har opprettet og koblet en GPO til Support-OU-en.
+
 Jeg har brukt gpupdate /force og gpresult /r for å kontrollere at GPO-en ble brukt.
+
 Jeg har feilsøkt DNS og nettverk med ipconfig /all, nslookup og ping.
+
 Jeg har brukt dcdiag /test:dns for å undersøke DNS-feil på domenekontrolleren.
+
 Hva jeg har lært
 
 Jeg har lært forskjellen mellom OU, grupper og GPO.
@@ -34,7 +42,6 @@ Denne uken har jeg fått mer praktisk erfaring med administrasjon av Windows-dom
 
 Jeg kan nå utføre flere grunnleggende oppgaver innen Active Directory, teste brukertilgang, kontrollere gruppepolicyer og undersøke vanlige nettverks- og DNS-problemer.
 
-du kan se 2 av bilde
 <img width="1012" height="624" alt="image" src="https://github.com/user-attachments/assets/5433c5eb-1b45-4cf6-94b3-2f96bd70da00" />
 <img width="960" height="564" alt="image" src="https://github.com/user-attachments/assets/8f1ab072-a04d-4a39-98db-3c019f8d3b46" />
 
@@ -42,57 +49,89 @@ du kan se 2 av bilde
 Ogso Se lenger ned i andre dokumentet for en detaljert oversikt over arbeidet jeg har gjort hver dag fra mandag til fredag. Der har jeg dokumentert oppgavene, testene, resultatene og feilsøkingen gjennom hele uken.
 
 
+## Mandag – bygg organisasjonen i Active Directory
 
-UKEPLAN-AD DS OG LDAP
-
-
-Mandag – bygg organisasjonen i Active Directory
-
-Stage 1
+## Stage 1
 
 Mål
+
 Jeg skal sjekke at DC01, DNS og Active Directory fungerer. Jeg skal ikke installere noe på nytt.
+
 Dette sjekket jeg på DC01
+
 ipconfig
+
 Jeg sjekket IP-adressen og nettverket.
+
 nslookup dc01.ad.lab.test
+
 Jeg sjekket om DNS finner DC01.
+
 nslookup -type=SRV _ldap._tcp.dc._msdcs.ad.lab.test
+
 Jeg sjekket om DNS finner domenekontrolleren.
+
  dcdiag
+ 
+
 Jeg sjekket om Active Directory har feil.
+
 Resultat
+
 Vi har tidligere jobbet med et domene som heter firma.local. Oppgaven bruker ad.lab.test. Kommandoene må bruke riktig domenenavn for vårt miljø.
-I den tidligere gjennomgangen ble det meldt om et problem med DNS SRV-oppslaget. Andre kontroller så ut til å fungere, men resultatene bør bekreftes med utskrift eller skjermbilde fra DC01.
+
+I den tidligere gjennomgangen ble det meldt om et problem med DNS SRV-oppslaget. Andre kontroller så ut til å fungere, men resultatene bør 
+bekreftes med utskrift eller skjermbilde fra DC01.
+
 Konklusjon
+
 Helsesjekken er gjennomført, men jeg kan ikke bekrefte at alt fungerer før DNS-feilen er undersøkt. Jeg dokumenterer feilen før jeg endrer noe.
 
-Steg 2 – OU-struktur
+## Steg 2 – OU-struktur
+
 Active Directory | DC01
+
 Mål
+
 Målet var å lage en enkel og ryddig OU-struktur i Active Directory. OU-er gjør det lettere å organisere brukere, datamaskiner og grupper.
 Plan
+
 Jeg planla denne strukturen før jeg bygde den:
+
 Bedrift
    Brukere
        Administrasjon
        Support
    Datamaskiner
    Grupper
+
 Gjennomføring
-Jeg åpnet Active Directory Users and Computers på DC01. Jeg laget OU-en Bedrift. Under Bedrift laget jeg Brukere, Datamaskiner og Grupper. Under Brukere laget jeg Administrasjon og Support.
+
+Jeg åpnet Active Directory Users and Computers på DC01. Jeg laget OU-en Bedrift. Under Bedrift laget jeg Brukere, Datamaskiner og Grupper. 
+
+Under Brukere laget jeg Administrasjon og Support.
+
 Hvorfor disse OU-ene?
+
 Bedrift: Samler organisasjonen på ett sted.
+
 Brukere: Samler brukerkontoer.
+
 Administrasjon: For brukere i administrasjonen.
+
 Support: For brukere som jobber med IT-support.
+
 Datamaskiner: Samler datamaskiner.
+
  Grupper: Samler grupper som brukes til tilgang.
+
 Resultat og konklusjon
+
 Jeg har laget en enkel OU-struktur. Den gjør domenet mer oversiktlig og lettere å administrere. Senere kan vi bruke OU-ene med Group Policy.
+
 Dokumentasjon: Legg inn et skjermbilde fra Active Directory Users and Computers som viser OU-strukturen.
 
-Steg 3 – opprett brukere med en navnestandard
+## Steg 3 – opprett brukere med en navnestandard
 
 Jeg opprettet seks brukere i Active Directory på DC01.
 
@@ -127,7 +166,8 @@ Jeg har opprettet seks brukere og kontrollert plasseringen til en bruker med Pow
 
 
 
-Steg 4 – skill tydelig mellom OU og gruppe
+## Steg 4 – skill tydelig mellom OU og gruppe
+
 OU (Organisasjonsenhet): Brukes til å organisere og administrere brukere og datamaskiner i Active Directory. Brukere får ikke automatisk tilgangsrettigheter ved å være plassert i en OU.
 
 Gruppe: Brukes til å samle brukere og administrere medlemskap og tilgangsrettigheter.
@@ -173,12 +213,13 @@ Resultat:
 
 Begge gruppene fungerer som planlagt. Jeg har lært hvordan AGDLP brukes til å organisere grupper og gjøre tilgangsstyring enklere.
 
-Steg 6 – test med PowerShell
+## Steg 6 – test med PowerShell
+
 Jeg brukte PowerShell til å kontrollere brukere og grupper i Active Directory. Jeg testet kommandoene Get-ADUser, Get-ADGroup og Get-ADGroupMember.
 
 Jeg bekreftet at GG-Support er medlem av DL.Felles-Support-RW. Resultatene stemmer med Active Directory Users and Computers (GUI).
 
-Mandagens grunnoppgave
+## Mandagens grunnoppgave
 
 Jeg har opprettet en ryddig OU-struktur i Active Directory med brukere og grupper.
 
@@ -206,33 +247,46 @@ Jeg vil opprette en OU som heter HR under Bedrift i Active Directory.
 Jeg vil også opprette to sikkerhetsgrupper:
 
 GG-HR – en global gruppe for ansatte i HR.
+
 DL-Felles-HR-RW – en domenelokal gruppe som gir tilgang til HR-mappen.
+
 Jeg vil legge GG-HR inn i DL-Felles-HR-RW.
 
 Dette gjør det enklere å administrere brukere og rettigheter. Bare ansatte som trenger tilgang til HR-mappen, skal få tilgang.
 
 
-Tirsdag – klient, domenepålogging og tilgang
-Steg 1 – DNS før domenemedlemskap
+## Tirsdag – klient, domenepålogging og tilgang
+
+ – DNS før domenemedlemskap
 
 
-Steg 1 – DNS før domenemedlemskap
+ – DNS før domenemedlemskap
 
 Utført arbeid:
 
 Kontrollerte nettverksinnstillingene på CLIENT01 med ipconfig /all.
+
 Bekreftet at CLIENT01 har IP-adressen 192.168.1.108 og DNS-server 192.168.1.10 (DC01).
+
 Kontrollerte DNS-tjenesten på DC01 med Get-Service DNS. Status var Running.
+
 Testet DNS på DC01 med nslookup google.com 192.168.1.10. Testen fungerte.
+
 Feil og feilsøking:
 
 CLIENT01 fikk feilmeldingen DNS request timed out ved DNS-oppslag mot DC01.
-Ping fra DC01 til CLIENT01 fungerte ikke.
-Opprettet en brannmurregel for ICMPv4 på CLIENT01, men problemet vedvarte.
-Resultat:
-DNS er riktig angitt på CLIENT01, men DNS-kommunikasjonen med DC01 fungerer fortsatt ikke. Oppslagene nslookup ad.lab.test og nslookup dc01.ad.lab.test er ikke dokumentert som testet.
 
-Steg 2 – meld CLIENT01 inn i domenet
+Ping fra DC01 til CLIENT01 fungerte ikke.
+
+Opprettet en brannmurregel for ICMPv4 på CLIENT01, men problemet vedvarte.
+
+Resultat:
+
+DNS er riktig angitt på CLIENT01, men DNS-kommunikasjonen med DC01 fungerer fortsatt ikke. Oppslagene nslookup ad.lab.test og nslookup 
+
+dc01.ad.lab.test er ikke dokumentert som testet.
+
+## Steg 2 – meld CLIENT01 inn i domenet
 
 Mål
 
@@ -241,10 +295,15 @@ Målet med denne oppgaven er å endre klientens datamaskinnavn til CLIENT01, mel
 Arbeid som er utført
 
 Jeg åpnet Systemegenskaper på klientmaskinen.
+
 Jeg gikk til fanen Datamaskinnavn og klikket på Endre.
+
 Jeg endret datamaskinnavnet fra DESKTOP-CS3A0OK til CLIENT01.
+
 Jeg valgte Domene og skrev inn ad.lab.test.
+
 Jeg klikket på OK for å forsøke å melde klienten inn i domenet.
+
 Problem som oppstod
 
 Windows viste følgende feilmelding:
@@ -262,55 +321,74 @@ nslookup ad.lab.test 192.168.1.10
 Resultatet viste:
 
 DNS request timed out
+
 Server: Unknown
+
 Address: 192.168.1.10
+
 Request timed-out
+
 Testen viste at klienten ikke fikk svar fra DNS-serveren på 192.168.1.10.
 
 Tidligere nettverkstester viste også at klienten kunne kontakte 192.168.1.104, men ikke 192.168.1.10.
 
 Status
 
-Steg 2 er påbegynt, men ikke fullført.
+## Steg 2 er påbegynt, men ikke fullført.
 
 Datamaskinnavnet CLIENT01 er skrevet inn, men endringen er ikke bekreftet etter omstart.
+
 Forsøket på å melde klienten inn i ad.lab.test mislyktes.
+
 DNS- og nettverkstilkoblingen til domenekontrolleren må undersøkes.
+
 Domenepålogging og kommandoene whoami og whoami /groups er ikke gjennomført.
+
 Sammenligning med lokal pålogging (.\lokalbruker) gjenstår.
 
-Steg 3 – flytt datamaskinobjektet
+## Steg 3 – flytt datamaskinobjektet
 
 
 Hva jeg gjorde:
 
 Åpnet Active Directory Users and Computers på DC01.
+
 Opprettet datamaskinobjektet CLIENT01 i Bedrift\Datamaskiner.
+
 Endret navnet på den virtuelle maskinen til client01.
+
 Forsøkte å koble CLIENT01 til domenet firma.local.
+
 Kontrollerte DNS, IP-adresse og nettverkskort i Hyper-V.
+
 Problemer:
 
 CLIENT01 klarte ikke å kontakte domenekontrolleren DC01.
+
 nslookup firma.local ga «DNS request timed out».
+
 ping 192.168.1.10 ga «Destination host unreachable».
+
 Domenetilkoblingen mislyktes på grunn av nettverksproblemer.
+
 Hvorfor bruke en egen OU?
 
 En egen OU gjør det enklere å organisere datamaskiner, administrere sikkerhet og bruke Group Policy (GPO).
 
-Steg 4 – gruppebasert tilgang
-
-Steg 4 – Gruppebasert tilgang
+## Steg 4 – gruppebasert tilgang
 
 Mål: Opprette delte mapper på DC01 og styre tilgangen gjennom sikkerhetsgrupper i Active Directory.
 
 Arbeid utført
 
 Opprettet mappene C:\Felles\Administrasjon og C:\Felles\Support på DC01.
+
 Kontrollerte sikkerhetsgruppene i Active Directory.
+
 Arbeidet med NTFS-tillatelser under Egenskaper → Sikkerhet.
+
 Brukte ressursgrupper for å tildele tilgang i stedet for enkeltbrukere.
+
 Problemer underveis
 
 Vi fikk feilmeldingen «Finner ikke navn» da vi forsøkte å legge til gruppen DL-Felles-Support-RW. Vi kontrollerte gruppenavnene i Active Directory og brukte avansert søk for å finne riktige grupper.
@@ -320,7 +398,6 @@ Testing og resultat
 Forventet tilgang fra CLIENT01:
 
 
-
 Bruker
 
 Mappe
@@ -345,23 +422,25 @@ Administrasjon
 
 Tilgang
 
-Konklusjon: Mappene ble opprettet, og vi arbeidet med gruppebaserte tillatelser. Testresultatene fra CLIENT01 er ikke dokumentert med skjermbilder.
+Konklusjon: 
+
+Mappene ble opprettet, og vi arbeidet med gruppebaserte tillatelser. Testresultatene fra CLIENT01 er ikke dokumentert med skjermbilder.
 
 
 
-Tirsdagens oppgave – Active Directory og filtilgang
+## Tirsdagens oppgave – Active Directory og filtilgang
 
-1. Mål
+Mål
 
 Målet mitt var å koble CLIENT01 til domenet firma.local, teste domenebrukere og kontrollere gruppebasert tilgang til mapper.
 
-2. Domenetilknytning – CLIENT01
+Domenetilknytning – CLIENT01
 
 Jeg endret datamaskinnavnet til CLIENT01 og forsøkte å melde maskinen inn i domenet firma.local.
 
 Jeg fikk feilmeldingen om at domenekontrolleren ikke kunne kontaktes. Jeg undersøkte problemet med ipconfig, ping og nslookup.
 
-CLIENT01 hadde IP-adressen 192.168.1.108 og DNS-serveren 192.168.1.10.
+ClENT01 hadde IP-adressen 192.168.1.108 og DNS-serveren 192.168.1.10.
 
 Jeg klarte ikke å fullføre domenetilknytningen på grunn av nettverks- og DNS-problemer.
 
@@ -370,7 +449,9 @@ Jeg klarte ikke å fullføre domenetilknytningen på grunn av nettverks- og DNS-
 Jeg opprettet to mapper på DC01:
 
 C:\Felles\Support
+
 C:\Felles\Administrasjon
+
 Jeg kontrollerte sikkerhetsgruppene i Active Directory og arbeidet med å gi gruppene tilgang til riktige mapper.
 
 Jeg fikk problemer med å finne gruppen DL-Felles-Support-RW. Jeg brukte avansert søk for å finne riktig gruppenavn.
@@ -383,8 +464,6 @@ Jeg fikk ikke fullført testene fra CLIENT01 fordi domenetilknytningen ikke fung
 
 5. Rettighetsmatrise
 
-
-
 Brukergruppe
 
 Support
@@ -429,7 +508,7 @@ Jeg lærte mer om Active Directory, gruppebaserte rettigheter og feilsøking i W
 
 Onsdag – LDAP og katalogsøk
 
-Steg 1 – LDAP og Distinguished Name
+## Steg 1 – LDAP og Distinguished Name
 
 Mål
 
@@ -458,10 +537,15 @@ CN=Sara Ahmed,OU=Support,OU=Brukere,OU=Bedrift,DC=firma,DC=local
 Dette betyr:
 
 CN=Sara Ahmed: Navnet på brukerobjektet.
+
 OU=Support: Brukeren ligger i organisasjonsenheten Support.
+
 OU=Brukere: Support ligger under Brukere.
+
 OU=Bedrift: Brukere ligger under Bedrift.
+
 DC=firma,DC=local: Domenet heter firma.local.
+
 Hva jeg lærte
 
 Jeg lærte at LDAP er en protokoll som brukes til å søke etter og lese informasjon i katalogtjenester som Active Directory.
@@ -473,7 +557,7 @@ Konklusjon
 Jeg klarte å finne Distinguished Name for brukeren Sara Ahmed og forstå hvordan CN, OU og DC beskriver plasseringen til brukeren i Active Directory.
 
 
-Steg 2 – hent DN med PowerShell
+## Steg 2 – hent DN med PowerShell
 
 Jeg brukte PowerShell på DC01 for å finne Distinguished Name (DN) til en bruker og en datamaskin i Active Directory.
 
@@ -497,11 +581,13 @@ Jeg sammenlignet resultatene med plasseringen i Active Directory Users and Compu
 
 Jeg fant ut at Sara Ahmed ligger under Bedrift → Brukere → Support, mens Client01 ligger under Bedrift → Datamaskiner.
 
-Konklusjon: Jeg lærte hvordan jeg kan bruke PowerShell til å finne Distinguished Name og kontrollere hvor objekter ligger i Active Directory.
+Konklusjon: 
+
+Jeg lærte hvordan jeg kan bruke PowerShell til å finne Distinguished Name og kontrollere hvor objekter ligger i Active Directory.
 
 
 
-Steg 3 – søk i en bestemt del av katalogen
+## Steg 3 – søk i en bestemt del av katalogen
 
 Mål
 
@@ -550,7 +636,7 @@ Konklusjon
 Jeg forsøkte å søke etter brukere i Support-OU-en med PowerShell. Selv om søket ikke ble fullført, fikk jeg erfaring med feilsøking og lærte at Active Directory kan søkes på forskjellige måter.
 
 
-Steg 4 – koble LDAP tilbake til nettverksuka
+## Steg 4 – koble LDAP tilbake til nettverksuka
 
 Mål
 
@@ -581,7 +667,9 @@ TcpTestSucceeded : False
 Jeg undersøkte nettverksinnstillingene på DC01 med kommandoen ipconfig og fant to IP-adresser:
 
 Ethernet: 192.168.1.10
+
 vEthernet (Hyper-V): 192.168.1.104
+
 Deretter testet jeg den andre IP-adressen fra CLIENT01:
 
 Test-NetConnection 192.168.1.104 -Port 389
@@ -597,8 +685,11 @@ Sammenhengen mellom DNS, TCP og LDAP
 Jeg lærte at disse nettverkstjenestene samarbeider:
 
 DNS oversetter domenenavnet til en IP-adresse.
+
 TCP oppretter en forbindelse til riktig IP-adresse og port.
+
 LDAP brukes til å søke etter og hente informasjon fra Active Directory.
+
 Port 389 brukes normalt til LDAP.
 
 Konklusjon
@@ -613,7 +704,7 @@ Jeg lærte hvordan DNS, IP-adresser, TCP-porter og LDAP henger sammen. Testen be
 
 
 
-Onsdagens oppgave – LDAP og katalogsøk
+## Onsdagens oppgave – LDAP og katalogsøk
 
 Grunnoppgave
 
@@ -636,8 +727,11 @@ Jeg forsøkte å bruke -SearchBase for å søke i Support-OU, men fikk feilmeldi
 Jeg testet LDAP-port 389 fra CLIENT01:
 
 dc01.firma.local: DNS-oppslag mislyktes.
+
 192.168.1.10: TCP-test mislyktes.
+
 192.168.1.104: TCP-test lyktes.
+
 Videre utforskning
 
 Jeg undersøkte hvordan LDAP-filter kan søke etter brukere basert på attributter som department.
@@ -651,37 +745,37 @@ Konklusjon
 Jeg lærte å finne objekter i Active Directory, forstå Distinguished Name og undersøke LDAP og nettverksforbindelser.
 
 
-Torsdag - Group Policy og AD-feilsøkingTorsdag - Group Policy og AD-feilsøking
+## Torsdag - Group Policy og AD-feilsøkingTorsdag - Group Policy og AD-feilsøking
 
-Steg 1 - forstå hva en GPO faktisk gjør
+## Steg 1 - forstå hva en GPO faktisk gjør
 
-1. Mål
+Mål
 
 Målet mitt var å koble CLIENT01 til domenet firma.local, teste flere domenebrukere, kontrollere gruppemedlemskap og arbeide med gruppebasert tilgang og Group Policy.
 
-2. Oppsett og struktur
+Oppsett og struktur
 
 Jeg brukte DC01 som domenekontroller og CLIENT01 som Windows-klient i Hyper-V.
 
 Jeg arbeidet med OU-strukturen Bedrift, Brukere, Support, Administrasjon og Grupper i Active Directory. Jeg brukte mappene C:\felles\Support og C:\felles\Administrasjon og sikkerhetsgrupper for tilgangsstyring.
 
-3. Test av domenebrukere
+Test av domenebrukere
 
 Jeg meldte CLIENT01 inn i domenet firma.local og testet pålogging med Sara Ahmed, Mohamed Ali og Ali Hassan. Jeg fikk opplyst og kontrollert at testene var gjennomført.
 
-4. Kontroll med kommandolinje
+ Kontroll med kommandolinje
 
 Jeg kjørte whoami på CLIENT01. Da jeg var logget inn som Sara Ahmed, fikk jeg resultatet firma\sara.ahmed.
 
 Jeg kjørte også whoami /groups og fant blant annet FIRMA\GG-Support og FIRMA\DL-Felles-Support-RW. Slik kontrollerte jeg hvilke grupper brukeren tilhørte.
 
-5. Group Policy (GPO)
+ Group Policy (GPO)
 
 Jeg opprettet GPO-Support-Brukerinnstilling og koblet den til Support-OU-en. Under User Configuration > Policies > Administrative Templates > Desktop aktiverte jeg innstillingen som fjerner Papirkurv-ikonet fra skrivebordet.
 
 Jeg kjørte gpupdate /force på CLIENT01 og fikk melding om at både bruker- og datamaskinpolicy ble oppdatert.
 
-6. Mapper og tilgangsstyring
+Mapper og tilgangsstyring
 
 Jeg arbeidet med gruppebaserte rettigheter for Support- og Administrasjon-mappene. Jeg bekreftet at Sara Ahmed kunne åpne Support-mappen fra CLIENT01.
 
@@ -689,25 +783,32 @@ Jeg testet brukerkontoene og mappetilgangene i laben. Jeg lærte at både deling
 
 
 
-Steg 2 - lag en trygg brukerpolicy
+## Steg 2 - lag en trygg brukerpolicy
 Mål
 
 Målet mitt var å opprette en enkel og trygg brukerpolicy i Group Policy Management, knytte den til riktig organisasjonsenhet (OU) og teste at policyen ble brukt på en domenebruker på CLIENT01.
 
 Gjennomføring
 
-• Jeg åpnet Group Policy Management på domenekontrolleren DC01 i domenet firma.local.
-• Jeg opprettet GPO-en GPO-Support-Brukerinnstilling og koblet den til Support-OU-en under Bedrift > Brukere > Support.
-• Jeg valgte en enkel brukerinnstilling i Group Policy Editor. Jeg testet en innstilling knyttet til skrivebordet, blant annet å fjerne papirkurvikonet fra skrivebordet.
-• Jeg logget på CLIENT01 med domenebrukeren sara.ahmed, som er medlem av GG-Support.
-• Jeg kjørte kommandoen gpupdate /force for å oppdatere gruppepolicyene og deretter gpresult /r for å kontrollere hvilke GPO-er som var brukt.
+Jeg åpnet Group Policy Management på domenekontrolleren DC01 i domenet firma.local.
+
+Jeg opprettet GPO-en GPO-Support-Brukerinnstilling og koblet den til Support-OU-en under Bedrift > Brukere > Support.
+
+Jeg valgte en enkel brukerinnstilling i Group Policy Editor. Jeg testet en innstilling knyttet til skrivebordet, blant annet å fjerne papirkurvikonet fra skrivebordet.
+
+Jeg logget på CLIENT01 med domenebrukeren sara.ahmed, som er medlem av GG-Support.
+
+Jeg kjørte kommandoen gpupdate /force for å oppdatere gruppepolicyene og deretter gpresult /r for å kontrollere hvilke GPO-er som var brukt.
+
 Resultat og kontroll
 
-Da jeg kjørte gpresult /r på CLIENT01, så jeg både GPO-Support-Brukerinnstilling og GPO-Support-Test under «Applied Group Policy Objects». Dette bekreftet at GPO-ene ble brukt for den innloggede brukeren.
+Da jeg kjørte gpresult /r på CLIENT01, så jeg både GPO-Support-Brukerinnstilling og GPO-Support-Test under «Applied Group Policy Objects». 
+
+Dette bekreftet at GPO-ene ble brukt for den innloggede brukeren.
 
 Jeg kontrollerte også at endringen fra brukerpolicyen var synlig på CLIENT01. Testen viste dermed både at policyen ble brukt, og at den hadde den forventede virkningen.
 
-Steg 3 - oppdater og bevis at policyen gjelder
+## Steg 3 - oppdater og bevis at policyen gjelder
 
 Mål
 
@@ -715,10 +816,14 @@ Jeg skulle oppdatere gruppepolicyene på CLIENT01 og dokumentere at riktig GPO f
 
 Gjennomføring
 
-• Jeg logget på CLIENT01 med domenebrukeren firma\sara.ahmed.
-• Jeg åpnet Ledetekst (CMD) og kjørte kommandoen gpupdate /force for å oppdatere gruppepolicyene.
-• Deretter kjørte jeg gpresult /r for å se hvilke gruppepolicyobjekter som ble brukt på brukerkontoen.
-• Jeg kontrollerte delen «Applied Group Policy Objects» og tok et skjermbilde som dokumentasjon.
+Jeg logget på CLIENT01 med domenebrukeren firma\sara.ahmed.
+
+Jeg åpnet Ledetekst (CMD) og kjørte kommandoen gpupdate /force for å oppdatere gruppepolicyene.
+
+Deretter kjørte jeg gpresult /r for å se hvilke gruppepolicyobjekter som ble brukt på brukerkontoen.
+
+Jeg kontrollerte delen «Applied Group Policy Objects» og tok et skjermbilde som dokumentasjon.
+
 Resultat
 
 I resultatet fra gpresult /r så jeg at både GPO-Support-Brukerinnstilling og GPO-Support-Test stod under «Applied Group Policy Objects». Jeg så også at brukeren var medlem av GG-Support og DL-Felles-Support-RW. Dette viser at de oppførte GPO-ene ble brukt for brukeren på CLIENT01.
@@ -729,12 +834,10 @@ Jeg bekreftet med gpresult /r at GPO-Support-Brukerinnstilling ble brukt på Sup
 
 Dokumentasjon – gpresult /r
 
-
-
 Figur 1: Jeg kontrollerte anvendte GPO-er med gpresult /r på CLIENT01.
 
 
-Steg 4 - AD-detektiv
+## Steg 4 - AD-detektiv
 
 Mål
 
@@ -768,41 +871,48 @@ Jeg dokumenterte feilsøkingen og fant en mulig DNS-konfigurasjonsfeil, men jeg 
 
 Kommandoer jeg brukte
 
-• ipconfig /all
-• nslookup firma.local
-• nslookup -type=SRV _ldap._tcp.firma.local 192.168.1.104
-• ping 192.168.1.10
-• ping 192.168.1.104
-• dcdiag /test:dns
+ipconfig /all
+
+nslookup firma.local
+
+nslookup -type=SRV _ldap._tcp.firma.local 192.168.1.104
+
+ping 192.168.1.10
+
+ping 192.168.1.104
+
+dcdiag /test:dns
 
 
-Torsdagens grunnoppgave
+## Torsdagens grunnoppgave
 
 Active Directory, GPO og feilsøking | Dokumentasjon i jeg-form
 
-1. Mål og labmiljø
+Mål og labmiljø
 
 Jeg jobbet i domenet firma.local med domenekontrolleren DC01 og klientmaskinen CLIENT01. Målet mitt var å konfigurere og kontrollere en brukerpolicy, feilsøke en feil og forklare hvordan Active Directory-tjenestene henger sammen.
 
-2. GPO knyttet til riktig OU
+GPO knyttet til riktig OU
 
 Jeg opprettet GPO-en «GPO-Support-Brukerinnstilling» i Group Policy Management og koblet den til Support-OU-en under Bedrift → Brukere → Support. Jeg valgte en enkel brukerinnstilling som kunne kontrolleres på CLIENT01, knyttet til visningen av papirkurvikonet på skrivebordet. Jeg testet policyen med domenebrukeren firma\sara.ahmed.
 
-3. Oppdatering og bevis med gpresult
+Oppdatering og bevis med gpresult
 
 På CLIENT01 logget jeg på som sara.ahmed og kjørte disse kommandoene:
 
-• gpupdate /force
-• gpresult /r
+gpupdate /force
+
+gpresult /r
+
 gpupdate /force meldte at oppdateringen av bruker- og datamaskinpolicy var fullført. I gpresult /r så jeg «GPO-Support-Brukerinnstilling» og «GPO-Support-Test» under anvendte gruppepolicyobjekter for brukeren. Dette var den viktigste dokumentasjonen på at policyen faktisk ble mottatt. Jeg kontrollerte også den synlige brukerinnstillingen på skrivebordet.
 
 Dokumentasjonsvedlegg: Sett inn skjermbildet av gpresult /r her dersom det skal leveres som bevis.
 
-4. Selvstendig feilsøking – AD-detektiv
+Selvstendig feilsøking – AD-detektiv
 
 Trinn
 
-Min dokumentasjon
+## Min dokumentasjon
 
 Symptom
 
@@ -830,7 +940,7 @@ Jeg kjørte dcdiag /test:dns på nytt. Testen viste fortsatt «failed». Derfor 
 
 Testen som tydeligst avdekket DNS-problemet, var dcdiag /test:dns. Ping-testene avdekket i tillegg forskjellen i nettverkstilgang mellom de to IP-adressene.
 
-5. Forskjellen mellom OU, gruppe og GPO
+ Forskjellen mellom OU, gruppe og GPO
 
 OU: Jeg bruker en organisasjonsenhet (OU) til å organisere AD-objekter og bestemme hvor en GPO skal kobles, for eksempel Support-OU.
 
@@ -838,21 +948,21 @@ Gruppe: Jeg bruker sikkerhetsgrupper til å samle brukere og tildele tilgang til
 
 GPO: Jeg bruker gruppepolicyobjekter (GPO) til å styre bruker- eller datamaskininnstillinger, for eksempel en skrivebordsinnstilling på CLIENT01.
 
-6. Hvordan tjenestene henger sammen
+Hvordan tjenestene henger sammen
 
 DNS hjelper CLIENT01 å finne domenekontrolleren og AD-tjenestene. Domenekontrolleren DC01 kjører AD DS, som lagrer objekter som brukere, grupper og OU-er. LDAP brukes til å søke etter og lese informasjon om disse objektene. Sikkerhetsgrupper styrer hvilke ressurser en bruker kan få tilgang til, sammen med delings- og NTFS-rettigheter. GPO-er kobles til nettsteder, domener eller OU-er og brukes til å konfigurere innstillinger. Jeg kan kontrollere hvilke policyer som gjelder med gpresult /r.
 
-7. Kjeden forklart med mitt eget labmiljø
+Kjeden forklart med mitt eget labmiljø
 
 DNS → domenekontroller → AD-objekt → gruppe → ressurs → LDAP-søk → GPO → test
 
 På CLIENT01 bruker jeg DNS for å finne domenet firma.local og domenekontrolleren DC01. På DC01 ligger AD-objektet sara.ahmed. Brukeren er medlem av GG-Support og DL-Felles-Support-RW, som brukes ved tilgangskontroll til Support-ressursen. Jeg kan undersøke brukerens og gruppenes opplysninger gjennom LDAP-baserte AD-oppslag, for eksempel med Get-ADUser og Get-ADGroupMember. Support-OU-en har GPO-en GPO-Support-Brukerinnstilling koblet til seg. Til slutt kjører jeg gpupdate /force og gpresult /r på CLIENT01 for å dokumentere at policyen er anvendt. DNS-feilsøkingen viste samtidig hvorfor fungerende navneoppløsning er viktig for domenet.
 
-8. Videre utforskning (valgfrie oppgaver)
+## Videre utforskning (valgfrie oppgaver)
 
 Læreren oppga flere valgfrie utvidelser: Security Filtering, HTML-rapport med gpresult /h, Salg-OU med brukere og LDAP-søk, CSV-automatisering, FILE01 og delegering. Disse er ikke dokumentert som utført i denne rapporten.
 
-9. Oppsummering
+## Oppsummering
 
 Jeg har opprettet og testet en enkel GPO, dokumentert den med gpresult /r og gjennomført en systematisk feilsøkingsprosess. Jeg har også forklart forskjellen mellom OU, gruppe og GPO og hvordan DNS, AD DS, LDAP, grupper, ressurser og policyer henger sammen. DNS-feilen var fortsatt ikke fullstendig løst ved siste kontroll, og dette er oppgitt tydelig i rapporten.
 
