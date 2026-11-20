@@ -42,10 +42,6 @@ Denne uken har jeg fått mer praktisk erfaring med administrasjon av Windows-dom
 
 Jeg kan nå utføre flere grunnleggende oppgaver innen Active Directory, teste brukertilgang, kontrollere gruppepolicyer og undersøke vanlige nettverks- og DNS-problemer.
 
-<img width="1012" height="624" alt="image" src="https://github.com/user-attachments/assets/5433c5eb-1b45-4cf6-94b3-2f96bd70da00" />
-<img width="960" height="564" alt="image" src="https://github.com/user-attachments/assets/8f1ab072-a04d-4a39-98db-3c019f8d3b46" />
-
-
 Ogso Se lenger ned i andre dokumentet for en detaljert oversikt over arbeidet jeg har gjort hver dag fra mandag til fredag. Der har jeg dokumentert oppgavene, testene, resultatene og feilsøkingen gjennom hele uken.
 
 
@@ -125,13 +121,18 @@ Datamaskiner: Samler datamaskiner.
 
  Grupper: Samler grupper som brukes til tilgang.
 
-Resultat og konklusjon
+## Resultat og konklusjon
+
+<img width="1012" height="624" alt="uke 45 mandag stage 2" src="https://github.com/user-attachments/assets/4891a45b-7852-4b37-a6c3-c3870a1837eb" />
 
 Jeg har laget en enkel OU-struktur. Den gjør domenet mer oversiktlig og lettere å administrere. Senere kan vi bruke OU-ene med Group Policy.
 
 Dokumentasjon: Legg inn et skjermbilde fra Active Directory Users and Computers som viser OU-strukturen.
 
 ## Steg 3 – opprett brukere med en navnestandard
+
+<img width="1289" height="1430" alt="image" src="https://github.com/user-attachments/assets/cf57cc9a-b973-4357-8263-47891ceb3663" />
+
 
 Jeg opprettet seks brukere i Active Directory på DC01.
 
@@ -188,7 +189,10 @@ Ali Hassan
 Mohamed Ali
 Begge gruppene ble opprettet med gruppeomfang Global og gruppetype Sikkerhet.
 
-Kontroll
+## Kontroll
+
+<img width="960" height="564" alt="mandag stage 4" src="https://github.com/user-attachments/assets/4cb794a8-8e23-4a6e-9ba5-61e178bfeb02" />
+
 
 Jeg åpnet gruppenes egenskaper og kontrollerte fanen Medlemmer for å bekrefte at brukerne var lagt til i riktig gruppe.
 
@@ -654,7 +658,10 @@ Name resolution of DC01.firma.local failed
 
 Dette viste at CLIENT01 ikke klarte å finne IP-adressen til DC01 gjennom DNS.
 
-Testing med IP-adresser
+## Testing med IP-adresser
+
+<img width="1536" height="1152" alt="image" src="https://github.com/user-attachments/assets/02c7c5d6-a5ee-4467-9784-7e80ec97bc20" />
+
 
 Jeg forsøkte deretter å koble til DC01 direkte med IP-adressen:
 
@@ -769,7 +776,9 @@ Jeg kjørte whoami på CLIENT01. Da jeg var logget inn som Sara Ahmed, fikk jeg 
 
 Jeg kjørte også whoami /groups og fant blant annet FIRMA\GG-Support og FIRMA\DL-Felles-Support-RW. Slik kontrollerte jeg hvilke grupper brukeren tilhørte.
 
- Group Policy (GPO)
+ ## Group Policy (GPO)
+
+ <img width="679" height="393" alt="tordag 45" src="https://github.com/user-attachments/assets/373bba05-c500-4d14-9348-ac3c61e143f3" />
 
 Jeg opprettet GPO-Support-Brukerinnstilling og koblet den til Support-OU-en. Under User Configuration > Policies > Administrative Templates > Desktop aktiverte jeg innstillingen som fjerner Papirkurv-ikonet fra skrivebordet.
 
@@ -814,7 +823,10 @@ Mål
 
 Jeg skulle oppdatere gruppepolicyene på CLIENT01 og dokumentere at riktig GPO faktisk ble brukt på en bruker i Support-OU-en.
 
-Gjennomføring
+## Gjennomføring
+
+<img width="1536" height="1152" alt="image" src="https://github.com/user-attachments/assets/7fbe5f19-2d4b-4c62-a1eb-268c4753b555" />
+
 
 Jeg logget på CLIENT01 med domenebrukeren firma\sara.ahmed.
 
@@ -832,7 +844,9 @@ Konklusjon
 
 Jeg bekreftet med gpresult /r at GPO-Support-Brukerinnstilling ble brukt på Support-brukeren sara.ahmed. Jeg dokumenterte resultatet med et skjermbilde, slik at jeg kan vise at policyen er brukt og ikke bare konfigurert.
 
-Dokumentasjon – gpresult /r
+## Dokumentasjon – gpresult /r
+
+<img width="1152" height="1536" alt="image" src="https://github.com/user-attachments/assets/025d8d25-8d66-44a6-b82a-69e4bf169557" />
 
 Figur 1: Jeg kontrollerte anvendte GPO-er med gpresult /r på CLIENT01.
 
